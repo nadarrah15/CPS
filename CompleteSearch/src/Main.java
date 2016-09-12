@@ -19,7 +19,7 @@ public class Main {
 		for(long val = 1; val < subsets; val++){
 			String rep = Long.toBinaryString(val);
 			int sum = 0;
-			for(int i = 0; i < N; i++){
+			for(int i = 0; i < rep.length(); i++){
 				if(rep.charAt(rep.length() - 1 - i) == '1'){
 					sum += a[i];
 				}
