@@ -13,10 +13,28 @@ public class Main {
 			int x = reader.nextInt();
 			if(x == 0) break;
 			else{
+				String answer = "";
+				PolePosition[] startingGrid = new PolePosition[x];
+				for(int count = 0; count < x; count++){
+					PolePosition temp = new PolePosition(reader.nextInt(), reader.nextInt());
+					try{
+						if(startingGrid[count - temp.getPosition()] != null){
+							startingGrid[count - temp.getPosition()] = temp;
+						}
+						else
+							throw new Exception();
+					} catch(Exception e) {
+						answer = "-1";
+						break;
+					}
+				}
 				
-				for(; x > 0; x--){
-					int number = reader.nextInt();
-					int positions = reader.nextInt();
+				if(answer.equals("-1"))
+					System.out.println(answer);
+				else{
+					for(int i = 0; i < x; i++){
+						answer += startingGrid[i] + " ";
+					}
 				}
 			}
 		}
