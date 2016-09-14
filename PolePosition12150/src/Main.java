@@ -18,11 +18,11 @@ public class Main {
 				for(int count = 0; count < x; count++){
 					PolePosition temp = new PolePosition(reader.nextInt(), reader.nextInt());
 					try{
-						if(startingGrid[count - temp.getPosition()] != null){
-							startingGrid[count - temp.getPosition()] = temp;
+						if(startingGrid[count + temp.getPosition()] == null){
+							startingGrid[count + temp.getPosition()] = temp;
 						}
 						else
-							throw new Exception();
+							throw new Exception("Throw me");
 					} catch(Exception e) {
 						answer = "-1";
 						break;
@@ -33,8 +33,9 @@ public class Main {
 					System.out.println(answer);
 				else{
 					for(int i = 0; i < x; i++){
-						answer += startingGrid[i] + " ";
+						answer += startingGrid[i].getNumber() + " ";
 					}
+					System.out.println(answer);
 				}
 			}
 		}
