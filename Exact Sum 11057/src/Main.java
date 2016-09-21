@@ -25,10 +25,10 @@ public class Main {
 			int j = array.length - 1;
 			while(i < j){
 				if(array[i] + array[j] > M){
-					j++;
+					j = (i + j) / 2;
 				}
 				else if(array[i] + array[j] < M){
-					i++;
+					i = (i + j) / 2;
 				}
 				else {
 					answerOne = array[i];
