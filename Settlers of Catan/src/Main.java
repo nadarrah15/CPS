@@ -34,7 +34,7 @@ public class Main {
 			ArrayList<Node> graph = new ArrayList<Node>(n);
 			
 			for(int i = 0; i < n; i++){
-				graph.set(i, new Node(i));
+				graph.add(i, new Node(i));
 			}
 			
 			
