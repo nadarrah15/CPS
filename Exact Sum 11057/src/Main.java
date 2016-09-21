@@ -1,3 +1,4 @@
+//Binary search M - price[i]
 import java.util.Scanner;
 
 public class Main {
