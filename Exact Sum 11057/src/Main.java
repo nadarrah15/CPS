@@ -22,10 +22,17 @@ public class Main {
 			reader.nextLine();
 			int answerOne = 0;
 			int answerTwo = 0;
+			int i;
 			Arrays.sort(array);
-			for(int i = N / 2; i >= 0; i--){
+			if(N % 2 == 0){
+				i = N / 2;
+			}
+			else {
+				i = N / 2 + 1;
+			}
+			for(; i >= 0; i--){
 				answerOne = array[i];
-				answerTwo = binarySearch(array, array[i]);
+				answerTwo = binarySearch(array, i);
 				
 				if(answerTwo != 0 && answerTwo != -1) break;
 			}
@@ -41,18 +48,27 @@ public class Main {
 		}
 	}
 
-	public static int binarySearch(int[] array, int num) {
+	public static int binarySearch(int[] array, int index) {
 		int low = 0;
 		int high = array.length - 1;
+		boolean incr = true;
 		while (low <= high) {
 			int mid = (low + high) / 2;
-			if (M - num == array[mid]) {
+			if(M - array[index] == array[mid] && mid != index) {
 				return array[mid];
 			} 
-			else if (M - num > array[mid])
+			else if (M - array[index] > array[mid]){
 				low = mid + 1;
-			else if (M - num < array[mid])
+				incr = true;
+			}
+			else if (M - array[index] < array[mid]){
 				high = mid - 1;
+				incr = false;
+			}
+			else{
+				if(incr) low++;
+				else high--;
+			}
 		}
 
 		return -1;
