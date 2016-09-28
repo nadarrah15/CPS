@@ -33,9 +33,9 @@ public class Main {
 					i++;
 				else if(array[i] + array[j] == M){
 					if(x == 0 && y == 0){
-						if(array[i] < array[j]){
+						if(array[i] <= array[j]){
 							x = array[i];
-							y = array[i];
+							y = array[j];
 						}
 						else{
 							x = array[j];
@@ -43,13 +43,13 @@ public class Main {
 						}
 					}
 					else{
-						if(array[i] > array[j] && array[i] - array[j] < y - x){
+						if(array[i] >= array[j] && array[i] - array[j] < y - x){
 							x = array[j];
 							y = array[i];
 						}
-						else if(array[i] < array[j] && array[j] - array[i] < y - x){
+						else if(array[i] <= array[j] && array[j] - array[i] < y - x){
 							x = array[i];
-							y = array[i];
+							y = array[j];
 						}
 					}
 					
