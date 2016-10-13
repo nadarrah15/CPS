@@ -32,16 +32,15 @@ public class Main {
 		ArrayList<Edge> edges = graph.get(v).edges;
 		for(int i = 0; i < edges.size(); i++){
 			int w = edges.get(i).dest - 1;
-			if(w < start) start = w;
 			
 			if(!visited[w]){
 				count++;
+				dfs(w, visited);
+				
 				if(count > max){
 					max = count;
+					start = w;
 				}
-				
-				dfs(w, visited);
-				start = w;
 			}
 		}
 	}
@@ -54,6 +53,7 @@ public class Main {
 		for(int i = 0; i < visited.length; i++){
 			if(!visited[i]){
 				count = 1;
+				visited = new boolean[graph.size()];
 				dfs(i, visited);
 			}
 		}
@@ -61,11 +61,11 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Scanner reader = new Scanner(System.in);
-		graph = new ArrayList<Vertex>();
 		
 		int T = reader.nextInt();
 		
-		for(int i = 1; i <= T; i++){			
+		for(int i = 1; i <= T; i++){
+			graph = new ArrayList<Vertex>();
 			int N = reader.nextInt();
 			
 			for(int j = 1; j <= N; j++){
@@ -75,7 +75,6 @@ public class Main {
 			for(int j = 0; j < N; j++){
 				int u = reader.nextInt(), v = reader.nextInt();
 				graph.get(u - 1).edges.add(new Edge(v));
-				graph.get(v - 1).edges.add(new Edge(u));
 			}
 			
 			dfs();
