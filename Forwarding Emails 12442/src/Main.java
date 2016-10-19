@@ -22,70 +22,48 @@ public class Main {
 	}
 	
 	static ArrayList<Vertex> graph;
-	static int count;
-	static int max;
-	static int start;
+	static int count = 1;
 	
-	static void dfs(int v, boolean[] visited){
-		visited[v] = true;
+	static int chain(int i){
+		boolean[] visited = new boolean[graph.size()];
 		
-		ArrayList<Edge> edges = graph.get(v).edges;
-		for(int i = 0; i < edges.size(); i++){
-			int w = edges.get(i).dest - 1;
-			
-			if(!visited[w]){
-				count++;
-				dfs(w, visited);
-				
-				if(count > max){
-					max = count;
-					start = w;
-				}
-			}
-		}
+		int w = graph.get(i).edges.get(0).dest;
+		
+		chain(w, visited);
+		
+		return count;
 	}
 	
-	static void dfs(){
-		boolean visited[] = new boolean[graph.size()];
+	static void chain(int i, boolean[] visited){
 		
-		dfs(0, visited);
-		
-		for(int i = 0; i < visited.length; i++){
-			if(!visited[i]){
-				count = 1;
-				visited = new boolean[graph.size()];
-				dfs(i, visited);
-			}
-		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		Scanner reader = new Scanner(System.in);
 		
 		int T = reader.nextInt();
-		
-		for(int i = 1; i <= T; i++){
+		for(int Case = 1; Case <= T; Case++){
 			graph = new ArrayList<Vertex>();
 			int N = reader.nextInt();
 			
-			for(int j = 1; j <= N; j++){
-				graph.add(new Vertex(j));
+			for(int i = 1; i <= N; i++){
+				graph.add(new Vertex(i));
 			}
 			
-			for(int j = 0; j < N; j++){
+			for(int i = 0; i < N; i++){
 				int u = reader.nextInt(), v = reader.nextInt();
-				graph.get(u - 1).edges.add(new Edge(v));
+				graph.get(u + 1).edges.add(new Edge(v));
 			}
 			
-			dfs();
-			
-			System.out.print("Case " + i + ": " + start);
-			if(i != T) System.out.println();
-			
-			count = 1;
-			max = count;
-			start = 50000;
+			int max = 0;
+			int point = 50000;
+			for(int i = 0; i < N; i++){
+				int length = chain(i);
+				if(length > max)
+					point = i;
+			}
+			System.out.print("Case " + Case + ": " + point);
+			if(Case < N) System.out.println();
 		}
 	}
-
 }
