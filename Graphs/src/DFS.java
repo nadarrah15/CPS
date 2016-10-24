@@ -27,6 +27,56 @@ public class DFS {
 	
 	static ArrayList<Vertex> graph;
 	
+	public static ArrayList<Integer> topSort(){
+		ArrayList<Integer> ts = new ArrayList<>();
+		int[] indeg = new int[graph.size()];
+		
+		for(int i = 0; i < graph.size(); i++){
+			ArrayList<Edge> edges = graph.get(i).edges;
+			
+			for(int j = 0; j < edges.size(); j++){
+				indeg[edges.get(j).dest]++;
+			}
+		}
+			
+		Queue<Integer> queue = new LinkedList<Integer>();
+			
+		for(int i = 0; i < indeg.length; i++){
+			if(indeg[i] == 0){
+				queue.add(i);
+			}
+		}
+		
+		boolean unique = true;
+		while(!queue.isEmpty()){
+			if(queue.size() > 1)
+				unique = false;
+			
+			int v = queue.remove();
+			
+			ts.add(v);
+			
+			ArrayList<Edge> edges = graph.get(v).edges;
+			for(int i = 0; i < edges.size(); i++){
+				int w = edges.get(i).dest;
+				indeg[w]--;
+				if(indeg[w] == 0)
+					queue.add(w);
+			}
+		}
+		
+		if(ts.size() < graph.size()){
+			//there is a cycle
+			;
+		}
+		if(unique){
+			//there is one top sort available
+			;
+		}
+		
+		return ts;
+	}
+	
 	static void dfs(int v, boolean[] visited){
 		visited[v] = true;
 		
