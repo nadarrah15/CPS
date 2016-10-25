@@ -1,30 +1,22 @@
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 
-	static ArrayList<Integer> graph;
+	static int[] graph, sum;
+	static boolean[] visited;
 	static int count;
 	
-	static int chain(int i){
-		boolean[] visited = new boolean[graph.size()];
-		visited[i] = true;
+	static int dfs(int v){
+		visited[v] = true;
 		
-		int w = graph.get(i) - 1;
-		count = 1;
-		chain(w, visited);
-		
-		return count;
-	}
-	
-	static void chain(int i, boolean[] visited){
-		visited[i] = true;
-		
-		int w = graph.get(i) - 1;
-		if(!visited[w]){
-			count++;
-			chain(w, visited);
+		int w = 0;
+		if(!visited[graph[v]]){
+			w += 1 + dfs(graph[v]);
 		}
+		visited[v] = false;
+		sum[v] = w;
+		return w;
 	}
 	
 	public static void main(String[] args){
@@ -32,30 +24,27 @@ public class Main {
 		
 		int T = reader.nextInt();
 		for(int Case = 1; Case <= T; Case++){
-			graph = new ArrayList<Integer>();
 			int N = reader.nextInt();
-			
-			for(int i = 1; i <= N; i++){
-				graph.add(null);
-			}
+			graph = new int[N];
+			sum = new int[N];
+			Arrays.fill(sum, -1);
+			visited = new boolean[N];
 			
 			for(int i = 0; i < N; i++){
 				int u = reader.nextInt(), v = reader.nextInt();
-				graph.set(u - 1, v);
+				graph[u - 1] = v - 1;
 			}
 			
-			int max = 0;
-			int point = 0;
+			int max = 0, point = 0;
 			for(int i = 0; i < N; i++){
-				int length = chain(i);
-				if(length > max){
+				if(sum[i] == -1) dfs(i);
+				if(sum[i] > max){
+					max = sum[i];
 					point = i + 1;
-					max = length;
 				}
-				if(length == N - 1) break;
 			}
-			System.out.print("Case " + Case + ": " + point);
-			if(Case < N) System.out.println();
+			
+			System.out.println("Case " + Case + ": " + point);
 		}
 	}
 }
