@@ -2,48 +2,40 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-
-	static class Vertex{
-		String name;
-		ArrayList<Edge> edges = new ArrayList<Edge>();
-		
-		public Vertex(String name){
-			this.name = name;
-		}
-	}
 	
-	static class Edge{
-		String dest;
-		
-		public Edge(String dest){
-			this.dest = dest;
-		}
-	}
-	
-	static ArrayList<Vertex> graph;
+	static ArrayList<String> bev;
 	
 	public static void main(String[] args) {
 		Scanner reader = new Scanner(System.in);
-		
 		int count = 0;
 		while(reader.hasNext()){
 			count++;
-			graph = new ArrayList<Vertex>();
-			
 			int N = reader.nextInt();
 			reader.nextLine();
+			bev = new ArrayList<String>();
+			
 			for(int i = 0; i < N; i++){
-				String str = reader.nextLine();
-				graph.add(new Vertex(str));
+				String name = reader.nextLine();
+				bev.add(name);
 			}
 			
 			int M = reader.nextInt();
 			reader.nextLine();
 			for(int i = 0; i < M; i++){
-				String b1 = reader.nextLine();
-				String b2 = reader.nextLine();
-				graph.get(graph.indexOf(new Vertex(b1))).edges.add(new Edge(b2));
+				String u = reader.next();
+				String v = reader.next();
+				
+				if(bev.indexOf(u) > bev.indexOf(v)){
+					bev.add(bev.indexOf(v), bev.remove(bev.indexOf(u)));
+				}
+				reader.nextLine();
 			}
+			
+			System.out.print("Case #" + count + ": Dilbert should drink beverages in this order: " + bev.get(0));
+			for(int i = 1; i < bev.size(); i++)
+				System.out.print(" " + bev.get(i));
+			
+			System.out.println("");
 		}
 	}
 
