@@ -3,7 +3,17 @@ import java.util.Scanner;
 
 public class Main {
 	
-	static ArrayList<String> bev;
+	static class Beverage{
+		String name;
+		ArrayList<String> dependent = new ArrayList<String>();
+		
+		public Beverage(String name){
+			this.name = name;
+		}
+	}
+	
+	static ArrayList<Beverage> bev;
+	static ArrayList<String> names;
 	
 	public static void main(String[] args) {
 		Scanner reader = new Scanner(System.in);
@@ -12,30 +22,17 @@ public class Main {
 			count++;
 			int N = reader.nextInt();
 			reader.nextLine();
-			bev = new ArrayList<String>();
+			bev = new ArrayList<Beverage>();
 			
 			for(int i = 0; i < N; i++){
-				String name = reader.nextLine();
-				bev.add(name);
+				bev.add(new Beverage(reader.nextLine()));
 			}
 			
 			int M = reader.nextInt();
 			reader.nextLine();
 			for(int i = 0; i < M; i++){
-				String u = reader.next();
-				String v = reader.next();
 				
-				if(bev.indexOf(u) > bev.indexOf(v)){
-					bev.add(bev.indexOf(v), bev.remove(bev.indexOf(u)));
-				}
-				reader.nextLine();
 			}
-			
-			System.out.print("Case #" + count + ": Dilbert should drink beverages in this order: " + bev.get(0));
-			for(int i = 1; i < bev.size(); i++)
-				System.out.print(" " + bev.get(i));
-			
-			System.out.println("");
 		}
 	}
 
