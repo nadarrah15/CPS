@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -23,9 +24,6 @@ public class Main {
 		}
 	}
 	
-	static ArrayList<String> bev;
-	static ArrayList<Vertex> graph;
-	
 	public static void main(String[] args) {
 		Scanner reader = new Scanner(System.in);
 		int count = 0;
@@ -33,8 +31,8 @@ public class Main {
 			count++;
 			int N = reader.nextInt();
 			reader.nextLine();
-			bev = new ArrayList<String>();
-			graph = new ArrayList<Vertex>();
+			ArrayList<String> bev = new ArrayList<String>();
+			ArrayList<Vertex> graph = new ArrayList<Vertex>();
 			
 			for(int i = 0; i < N; i++){
 				bev.add(reader.nextLine());
@@ -47,7 +45,7 @@ public class Main {
 			reader.nextLine();
 			for(int i = 0; i < M; i++){
 				int a = bev.indexOf(reader.next()), b = bev.indexOf(reader.next());
-				ArrayList<Edge> edges = graph.get(i).edges;
+				ArrayList<Edge> edges = graph.get(a).edges;
 				edges.add(new Edge(b));
 			}
 			
@@ -61,11 +59,15 @@ public class Main {
 			
 			Queue<Integer> q = new LinkedList<Integer>();
 			
-			for(int i = 0; i < indeg.length; i++)
-				if (indeg[i] == 0)
+			for(int i = 0; i < indeg.length; i++){
+				if (indeg[i] == 0){
 					q.add(i);
+					indeg[i] = -1;
+					break;
+				}
+			}
 			
-			System.out.print("Case # "+ count + ": Dilbert should drink beverages in this order:");
+			System.out.print("Case #"+ count + ": Dilbert should drink beverages in this order:");
 			
 			while (!q.isEmpty()) {
 				// find a vertex with in-degree 0
@@ -79,10 +81,17 @@ public class Main {
 				for (int i = 0; i < edges.size(); i++) {
 					int w = edges.get(i).dest;
 					--indeg[w];
-					if (indeg[w] == 0)
-						q.add(w);
+				}
+				
+				for(int i = 0; i < indeg.length; i++){
+					if (indeg[i] == 0){
+						q.add(i);
+						indeg[i] = -1;
+						break;
+					}
 				}
 			}
+			System.out.println(".\n");
 		}
 	}
 
