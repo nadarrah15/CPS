@@ -1,16 +1,13 @@
 import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class Main {
 	
-	static class Edge {
+	static class Edge{
 		int dest;
 		int weight;
-		
-		Edge(int d) {
-			dest = d;
-			weight = 1;
-		}
 		
 		Edge(int d, int w) {
 			dest = d;
@@ -18,7 +15,7 @@ public class Main {
 		}
 	}
 	
-	static class Vertex {
+	static class Vertex{
 		ArrayList<Edge> edges;
 		int name;
 		
@@ -38,11 +35,23 @@ public class Main {
 		for(int Case = 1; Case <= N; Case++){
 			int n = in.nextInt(), m = in.nextInt(), S = in.nextInt(), T = in.nextInt();
 			
-			
+			for(int i = 0; i < n; i++){
+				graph.add(new Vertex(i));
+			}
 			
 			for(int i = 0; i < m; i++){
 				int a = in.nextInt(), b = in.nextInt(), w = in.nextInt();
 				
+				graph.get(a).edges.add(new Edge(b, w));
+				graph.get(b).edges.add(new Edge(a, w));
+			}
+			
+			int[] path = new int[n];
+			
+			Queue<Vertex> q = new PriorityQueue<Vertex>();
+			q.add(graph.get(S));
+			while(!q.isEmpty()){
+				Vertex v = q.peek();
 			}
 		}
 	}
